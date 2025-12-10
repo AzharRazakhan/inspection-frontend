@@ -1,0 +1,104 @@
+<h3>Specification Sheet</h3>
+
+<form #specForm="ngForm" (ngSubmit)="addSpec()" novalidate>
+
+    <!-- Select Product + Parameter -->
+    <div class="row mt-3">
+
+        <!-- Product -->
+        <div class="col">
+            <select class="form-select" name="productId" [(ngModel)]="productId" (change)="loadSpecs()" required
+                #productRef="ngModel" [ngClass]="{'is-invalid': productRef.invalid && productRef.touched}">
+                <option value="">Select Product</option>
+                <option *ngFor="let p of products" [value]="p._id">{{p.name}}</option>
+            </select>
+
+            <div class="text-danger small" *ngIf="productRef.invalid && productRef.touched">
+                Product selection is required.
+            </div>
+        </div>
+
+        <!-- Parameter -->
+        <div class="col">
+            <select class="form-select" name="parameterId" [(ngModel)]="parameterId" required #paramRef="ngModel"
+                [ngClass]="{'is-invalid': paramRef.invalid && paramRef.touched}">
+                <option value="">Select Parameter</option>
+                <option *ngFor="let x of parameters" [value]="x._id">{{x.name}}</option>
+            </select>
+
+            <div class="text-danger small" *ngIf="paramRef.invalid && paramRef.touched">
+                Parameter selection is required.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Nominal + Limits -->
+    <div class="row mt-3">
+
+        <!-- Nominal -->
+        <div class="col">
+            <input class="form-control" type="number" name="nominal" placeholder="Nominal" [(ngModel)]="nominal"
+                required #nominalRef="ngModel" [ngClass]="{'is-invalid': nominalRef.invalid && nominalRef.touched}">
+            <div class="text-danger small" *ngIf="nominalRef.invalid && nominalRef.touched">
+                Nominal value is required.
+            </div>
+        </div>
+
+        <!-- Upper Limit -->
+        <div class="col">
+            <input class="form-control" type="number" name="upperLimit" placeholder="Upper Limit"
+                [(ngModel)]="upperLimit" required #upperRef="ngModel"
+                [ngClass]="{'is-invalid': upperRef.invalid && upperRef.touched}">
+            <div class="text-danger small" *ngIf="upperRef.invalid && upperRef.touched">
+                Upper Limit is required.
+            </div>
+        </div>
+
+        <!-- Lower Limit -->
+        <div class="col">
+            <input class="form-control" type="number" name="lowerLimit" placeholder="Lower Limit"
+                [(ngModel)]="lowerLimit" required #lowerRef="ngModel"
+                [ngClass]="{'is-invalid': lowerRef.invalid && lowerRef.touched}">
+            <div class="text-danger small" *ngIf="lowerRef.invalid && lowerRef.touched">
+                Lower Limit is required.
+            </div>
+
+            <!-- Additional Validation: Upper must be > Lower -->
+            <div class="text-danger small" *ngIf="upperLimit !== '' && lowerLimit !== '' && lowerLimit >= upperLimit">
+                Lower Limit must be less than Upper Limit.
+            </div>
+        </div>
+
+        <!-- Add Button -->
+        <div class="col">
+            <button class="btn btn-primary w-100" [disabled]="specForm.invalid || lowerLimit >= upperLimit">
+                Add
+            </button>
+        </div>
+
+    </div>
+
+</form>
+
+<!-- Table -->
+<h5 class="mt-4">Existing Specifications</h5>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Nominal</th>
+            <th>Upper</th>
+            <th>Lower</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let s of specs">
+            <td>{{s.parameterId.name}}</td>
+            <td>{{s.nominal}}</td>
+            <td>{{s.upperLimit}}</td>
+            <td>{{s.lowerLimit}}</td>
+        </tr>
+    </tbody>
+</table>

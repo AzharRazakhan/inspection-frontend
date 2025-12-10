@@ -1,0 +1,61 @@
+<h3>Inspection Plan</h3>
+
+<div class="row mt-3">
+    <div class="col">
+        <select class="form-select" [(ngModel)]="productId" (change)="loadPlans()">
+            <option value="">Select Product</option>
+            <option *ngFor="let p of products" [value]="p._id">{{p.name}}</option>
+        </select>
+    </div>
+
+    <div class="col">
+        <select class="form-select" [(ngModel)]="stage" (change)="loadPlans()">
+            <option value="in-process">In-Process</option>
+            <option value="final">Final</option>
+        </select>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col">
+        <select class="form-select" [(ngModel)]="parameterId">
+            <option value="">Select Parameter</option>
+            <option *ngFor="let p of parameters" [value]="p._id">{{p.name}}</option>
+        </select>
+    </div>
+
+    <div class="col">
+        <input class="form-control" type="number" placeholder="Sample Size" [(ngModel)]="sampleSize">
+    </div>
+
+    <div class="col">
+        <input class="form-control" placeholder="Method" [(ngModel)]="method">
+    </div>
+
+    <div class="col d-flex align-items-center">
+        <input type="checkbox" [(ngModel)]="check"> &nbsp; Check?
+    </div>
+
+    <div class="col">
+        <button class="btn btn-primary w-100" (click)="addPlan()">Add</button>
+    </div>
+</div>
+
+<table class="table table-bordered mt-4">
+    <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Check</th>
+            <th>Sample</th>
+            <th>Method</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of plans">
+            <td>{{p.parameterId.name}}</td>
+            <td>{{p.check ? 'Yes':'No'}}</td>
+            <td>{{p.sampleSize}}</td>
+            <td>{{p.method}}</td>
+        </tr>
+    </tbody>
+</table>
