@@ -2,16 +2,12 @@
 
 <!-- Filters -->
 <div class="row mt-3">
-
-    <!-- Product Filter -->
     <div class="col-md-4">
         <select class="form-select" [(ngModel)]="productId" (change)="loadSummary()">
             <option value="">All Products</option>
             <option *ngFor="let p of products" [value]="p._id">{{p.name}}</option>
         </select>
     </div>
-
-    <!-- Stage Filter -->
     <div class="col-md-4">
         <select class="form-select" [(ngModel)]="stage" (change)="loadSummary()">
             <option value="">All Stages</option>
@@ -22,32 +18,24 @@
 
 </div>
 <div class="row mt-4">
-
-    <!-- Products -->
     <div class="col-md-3">
         <div class="card shadow-sm p-3 text-center">
             <h5>Products</h5>
             <h2>{{counts.products}}</h2>
         </div>
     </div>
-
-    <!-- Parameters -->
     <div class="col-md-3">
         <div class="card shadow-sm p-3 text-center">
             <h5>Parameters</h5>
             <h2>{{counts.parameters}}</h2>
         </div>
     </div>
-
-    <!-- Specs -->
     <div class="col-md-3">
         <div class="card shadow-sm p-3 text-center">
             <h5>Specifications</h5>
             <h2>{{counts.specs}}</h2>
         </div>
     </div>
-
-    <!-- Reports -->
     <div class="col-md-3">
         <div class="card shadow-sm p-3 text-center">
             <h5>Reports</h5>
@@ -56,7 +44,6 @@
     </div>
 
 </div>
-<!-- Summary Cards -->
 <div class="row mt-4">
 
     <div class="col-md-4">
@@ -81,8 +68,6 @@
     </div>
 
 </div>
-
-<!-- Recent Reports Table -->
 <h4 class="mt-4">Filtered Inspection Reports</h4>
 
 <table class="table table-bordered mt-2">

@@ -38,8 +38,4 @@ export class Login {
     }
   }
 
-  loginWithGoogle(): void {
-    console.log('Google login clicked');
-    // TODO: integrate Google OAuth
-  }
 }

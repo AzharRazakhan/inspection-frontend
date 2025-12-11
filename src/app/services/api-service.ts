@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  BASE = "http://localhost:5000/api";
+  // BASE = "http://localhost:5000/api";
+  private BASE = environment.apiUrl + '/api';
+
 
   constructor(private http: HttpClient) { }
   getProducts() { return this.http.get(`${this.BASE}/products`); }

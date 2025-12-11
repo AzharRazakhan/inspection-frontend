@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api-service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-plan',
@@ -18,7 +18,7 @@ export class Plan implements OnInit {
   productId = "";
   parameterId = "";
   stage = "in-process";
-  sampleSize = 1;
+  sampleSize: any = 1;
   method = "";
   check = true;
 
@@ -33,9 +33,12 @@ export class Plan implements OnInit {
     if (!this.productId) return;
     this.api.getPlan(this.productId, this.stage).subscribe((d: any) => this.plans = d);
   }
+  addPlan(form: any) {
 
-  addPlan() {
-    if (!this.productId || !this.parameterId) return;
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
 
     this.api.addPlan({
       productId: this.productId,
@@ -44,6 +47,19 @@ export class Plan implements OnInit {
       check: this.check,
       sampleSize: this.sampleSize,
       method: this.method
-    }).subscribe(() => this.loadPlans());
+    }).subscribe(() => {
+
+      alert("Plan added successfully!");
+      form.resetForm({
+        productId: this.productId,
+        stage: this.stage,
+        parameterId: "",
+        sampleSize: 1,
+        method: "",
+        check: true
+      });
+
+      this.loadPlans();
+    });
   }
 }

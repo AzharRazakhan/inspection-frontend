@@ -1,11 +1,7 @@
 <h3>Specification Sheet</h3>
 
-<form #specForm="ngForm" (ngSubmit)="addSpec()" novalidate>
-
-    <!-- Select Product + Parameter -->
+<form #specForm="ngForm" (ngSubmit)="addSpec(specForm)" novalidate>
     <div class="row mt-3">
-
-        <!-- Product -->
         <div class="col">
             <select class="form-select" name="productId" [(ngModel)]="productId" (change)="loadSpecs()" required
                 #productRef="ngModel" [ngClass]="{'is-invalid': productRef.invalid && productRef.touched}">
@@ -17,8 +13,6 @@
                 Product selection is required.
             </div>
         </div>
-
-        <!-- Parameter -->
         <div class="col">
             <select class="form-select" name="parameterId" [(ngModel)]="parameterId" required #paramRef="ngModel"
                 [ngClass]="{'is-invalid': paramRef.invalid && paramRef.touched}">
@@ -32,11 +26,7 @@
         </div>
 
     </div>
-
-    <!-- Nominal + Limits -->
     <div class="row mt-3">
-
-        <!-- Nominal -->
         <div class="col">
             <input class="form-control" type="number" name="nominal" placeholder="Nominal" [(ngModel)]="nominal"
                 required #nominalRef="ngModel" [ngClass]="{'is-invalid': nominalRef.invalid && nominalRef.touched}">
@@ -44,8 +34,6 @@
                 Nominal value is required.
             </div>
         </div>
-
-        <!-- Upper Limit -->
         <div class="col">
             <input class="form-control" type="number" name="upperLimit" placeholder="Upper Limit"
                 [(ngModel)]="upperLimit" required #upperRef="ngModel"
@@ -55,7 +43,6 @@
             </div>
         </div>
 
-        <!-- Lower Limit -->
         <div class="col">
             <input class="form-control" type="number" name="lowerLimit" placeholder="Lower Limit"
                 [(ngModel)]="lowerLimit" required #lowerRef="ngModel"
@@ -64,13 +51,11 @@
                 Lower Limit is required.
             </div>
 
-            <!-- Additional Validation: Upper must be > Lower -->
-            <div class="text-danger small" *ngIf="upperLimit !== '' && lowerLimit !== '' && lowerLimit >= upperLimit">
+            <div class="error" *ngIf="lowerLimit && upperLimit && (lowerLimit >= upperLimit)">
                 Lower Limit must be less than Upper Limit.
             </div>
         </div>
 
-        <!-- Add Button -->
         <div class="col">
             <button class="btn btn-primary w-100" [disabled]="specForm.invalid || lowerLimit >= upperLimit">
                 Add
@@ -80,8 +65,6 @@
     </div>
 
 </form>
-
-<!-- Table -->
 <h5 class="mt-4">Existing Specifications</h5>
 
 <table class="table table-bordered">

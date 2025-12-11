@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
@@ -25,15 +26,19 @@ export class Products implements OnInit {
     this.api.getProducts().subscribe((res: any) => this.products = res);
   }
 
-  addProduct() {
-    if (!this.clientCode || !this.name) return alert("All fields required!");
+  addProduct(form: NgForm) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
 
     this.api.addProduct({
       clientCode: this.clientCode,
       name: this.name,
       description: this.description
     }).subscribe(() => {
-      this.clientCode = this.name = this.description = "";
+      alert("Product added successfully!");
+      form.resetForm();
       this.load();
     });
   }

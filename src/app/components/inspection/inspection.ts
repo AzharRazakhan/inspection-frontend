@@ -31,8 +31,6 @@ export class Inspection implements OnInit {
 
     this.api.getPlan(this.productId, this.stage).subscribe((res: any) => {
       this.plans = res;
-
-      // Build dynamic entries
       this.entries = this.plans.map((p: any) => ({
         parameterId: p.parameterId._id,
         observations: Array(p.sampleSize).fill(""),
@@ -42,7 +40,6 @@ export class Inspection implements OnInit {
     });
   }
 
-  // Auto result calculation
   calculateResult(entry: any, plan: any) {
     const allOk = entry.observations.every((val: number) =>
       val >= plan.parameterId.lowerLimit && val <= plan.parameterId.upperLimit
@@ -51,7 +48,6 @@ export class Inspection implements OnInit {
   }
 
   submitReport() {
-    // Attach result
     this.entries = this.entries.map((e, i) => ({
       ...e,
       result: this.calculateResult(e, this.plans[i])

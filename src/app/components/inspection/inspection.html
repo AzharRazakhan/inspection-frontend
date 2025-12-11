@@ -1,11 +1,7 @@
 <h3>Inspection Report</h3>
 
 <form #reportForm="ngForm" (ngSubmit)="submitReport()" novalidate>
-
-    <!-- Product & Stage -->
     <div class="row mt-3">
-
-        <!-- Product -->
         <div class="col">
             <select class="form-select" name="productId" [(ngModel)]="productId" required (change)="loadPlan()"
                 #productRef="ngModel" [ngClass]="{'is-invalid': productRef.invalid && productRef.touched}">
@@ -16,8 +12,6 @@
                 Product selection is required.
             </div>
         </div>
-
-        <!-- Stage -->
         <div class="col">
             <select class="form-select" name="stage" [(ngModel)]="stage" required (change)="loadPlan()"
                 #stageRef="ngModel" [ngClass]="{'is-invalid': stageRef.invalid && stageRef.touched}">
@@ -29,13 +23,9 @@
             </div>
         </div>
     </div>
-
-    <!-- Dynamic Parameter Cards -->
     <div *ngFor="let e of entries; let i=index" class="card p-3 mt-3">
 
         <h5 class="mb-2">{{plans[i].parameterId.name}}</h5>
-
-        <!-- Observations -->
         <div class="row">
             <div class="col" *ngFor="let x of e.observations; let j=index">
 
@@ -46,8 +36,6 @@
                 <div class="text-danger small" *ngIf="obsRef.invalid && obsRef.touched">
                     Observation {{j+1}} is required.
                 </div>
-
-                <!-- Check range validation -->
                 <div class="text-danger small" *ngIf="
             e.observations[j] !== '' &&
             (e.observations[j] < plans[i].parameterId.lowerLimit ||
@@ -58,8 +46,6 @@
 
             </div>
         </div>
-
-        <!-- Remarks -->
         <textarea class="form-control mt-2" placeholder="Remarks" name="remarks{{i}}" [(ngModel)]="e.remarks" required
             minlength="3" #remarksRef="ngModel"
             [ngClass]="{'is-invalid': remarksRef.invalid && remarksRef.touched}"></textarea>
@@ -69,8 +55,6 @@
         </div>
 
     </div>
-
-    <!-- Submit Button -->
     <button class="btn btn-success mt-4" [disabled]="reportForm.invalid">
         Submit
     </button>

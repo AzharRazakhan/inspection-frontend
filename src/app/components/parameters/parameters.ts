@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api-service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-parameters',
@@ -23,11 +23,20 @@ export class Parameters implements OnInit {
     this.api.getParameters().subscribe((res: any) => this.parameters = res);
   }
 
-  add() {
+  add(form: NgForm) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
     if (!this.name) return;
     this.api.addParameter({ name: this.name }).subscribe(() => {
+      alert("Parameter added successfully!");
       this.name = "";
+      form.resetForm();
       this.load();
     });
   }
+
+
 }
